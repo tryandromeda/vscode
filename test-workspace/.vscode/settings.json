@@ -1,0 +1,6 @@
+{
+    "andromeda.enable": true,
+    "andromeda.run": "onType",
+    "andromeda.unusedDisableDirectives": "warn",
+    "andromeda.trace.server": "messages"
+}

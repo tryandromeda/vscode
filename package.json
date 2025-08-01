@@ -1,0 +1,115 @@
+{
+  "name": "andromeda-vscode",
+  "displayName": "Andromeda Language Server",
+  "description": "JavaScript and TypeScript linting with Andromeda Language Server",
+  "version": "0.1.0",
+  "publisher": "andromeda",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "javascript",
+    "typescript",
+    "linting",
+    "language-server",
+    "andromeda"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "javascript",
+        "extensions": [".js", ".jsx", ".mjs", ".cjs"]
+      },
+      {
+        "id": "typescript",
+        "extensions": [".ts", ".tsx"]
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Andromeda",
+      "properties": {
+        "andromeda.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Andromeda language server"
+        },
+        "andromeda.run": {
+          "type": "string",
+          "enum": ["onType", "onSave", "never"],
+          "default": "onType",
+          "description": "When to run diagnostics"
+        },
+        "andromeda.configPath": {
+          "type": "string",
+          "default": null,
+          "description": "Path to Andromeda configuration file"
+        },
+        "andromeda.unusedDisableDirectives": {
+          "type": "string",
+          "enum": ["allow", "warn", "error"],
+          "default": "allow",
+          "description": "How to handle unused disable directives"
+        },
+        "andromeda.executablePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the Andromeda executable (defaults to target/debug/andromeda.exe relative to workspace)"
+        },
+        "andromeda.trace.server": {
+          "type": "string",
+          "enum": ["off", "messages", "verbose"],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the language server"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "andromeda.restart",
+        "title": "Restart Andromeda Language Server",
+        "category": "Andromeda"
+      },
+      {
+        "command": "andromeda.showOutput",
+        "title": "Show Andromeda Output",
+        "category": "Andromeda"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "andromeda.restart",
+          "when": "andromeda.enabled"
+        },
+        {
+          "command": "andromeda.showOutput",
+          "when": "andromeda.enabled"
+        }
+      ]
+    }
+  },
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:typescript"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^8.1.0"
+  }
+}
