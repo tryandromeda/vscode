@@ -6,7 +6,7 @@ function emptyFunction() {
 var unusedVariable = "not used anywhere";
 
 function problemFunction() {
-    ;  // Empty statement
+    // Empty statement
     if (true) {
         return "early return";
     }
@@ -16,18 +16,18 @@ function problemFunction() {
 // Test different syntax patterns
 const obj = {
     name: "test",
-    getValue: function() {
+    getValue: function () {
         return this.value || 42;
-    }
+    },
 };
 
 // Async function
 async function fetchData() {
     try {
-        const response = await fetch('/api/data');
+        const response = await fetch("/api/data");
         return response.json();
     } catch (error) {
-        console.error('Failed to fetch data:', error);
+        console.error("Failed to fetch data:", error);
         throw error;
     }
 }

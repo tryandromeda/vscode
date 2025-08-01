@@ -111,20 +111,3 @@ npm run compile
 1. Open this folder in VS Code
 2. Press F5 to launch Extension Development Host
 3. Test the extension in the new window
-
-### Publishing
-
-```bash
-npm run vscode:prepublish
-vsce package
-```
-
-## Contributing
-
-Contributions are welcome! Please see the main [Andromeda repository](https://github.com/tryandromeda/andromeda) for contribution guidelines.
-
-## License
-
-This extension is licensed under the Mozilla Public License 2.0, same as the main Andromeda project.
-
-Visual Studio Code extension for Andromeda 

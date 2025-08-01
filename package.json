@@ -1,9 +1,18 @@
 {
   "name": "andromeda-vscode",
   "displayName": "Andromeda Language Server",
-  "description": "JavaScript and TypeScript linting with Andromeda Language Server",
+  "description": "JavaScript and TypeScript linting with the Andromeda Language Server",
   "version": "0.1.0",
-  "publisher": "andromeda",
+  "publisher": "andromeda-team",
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/tryandromeda/andromeda",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tryandromeda/vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tryandromeda/andromeda/issues"
+  },
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -60,7 +69,7 @@
         "andromeda.executablePath": {
           "type": "string",
           "default": "",
-          "description": "Path to the Andromeda executable (defaults to target/debug/andromeda.exe relative to workspace)"
+          "description": "Path to the Andromeda executable (defaults to 'andromeda' from system PATH)"
         },
         "andromeda.trace.server": {
           "type": "string",
@@ -102,14 +111,19 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "pretest": "npm run compile",
+    "lint": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/vscode": "^1.74.0",
-    "@types/node": "16.x",
-    "typescript": "^4.9.4"
+    "@types/vscode": "^1.102.0",
+    "@types/node": "^24.1.0",
+    "typescript": "^5.9.2",
+    "@vscode/vsce": "^3.0.0"
   },
   "dependencies": {
-    "vscode-languageclient": "^8.1.0"
+    "vscode-languageclient": "^9.0.1"
   }
 }

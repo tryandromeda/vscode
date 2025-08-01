@@ -1,11 +1,9 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import * as fs from 'fs';
 import {
     LanguageClient,
     LanguageClientOptions,
     ServerOptions,
-    TransportKind,
     ExecutableOptions,
     Executable
 } from 'vscode-languageclient/node';
@@ -40,37 +38,7 @@ function getExecutablePath(): string {
         return configuredPath;
     }
     
-    // Try to find the binary relative to workspace
-    const workspaceFolders = vscode.workspace.workspaceFolders;
-    if (workspaceFolders && workspaceFolders.length > 0) {
-        const workspaceRoot = workspaceFolders[0].uri.fsPath;
-        
-        // Check if we're in the andromeda project root
-        const targetDebugPath = path.join(workspaceRoot, 'target', 'debug', 'andromeda.exe');
-        if (fs.existsSync(targetDebugPath)) {
-            return targetDebugPath;
-        }
-        
-        // Check if we're in a subdirectory of the andromeda project
-        const parentTargetDebugPath = path.join(workspaceRoot, '..', 'target', 'debug', 'andromeda.exe');
-        if (fs.existsSync(parentTargetDebugPath)) {
-            return parentTargetDebugPath;
-        }
-        
-        // Check multiple levels up to find the project root
-        let currentPath = workspaceRoot;
-        for (let i = 0; i < 5; i++) {
-            const testPath = path.join(currentPath, 'target', 'debug', 'andromeda.exe');
-            if (fs.existsSync(testPath)) {
-                return testPath;
-            }
-            const parentPath = path.dirname(currentPath);
-            if (parentPath === currentPath) break; // Reached root
-            currentPath = parentPath;
-        }
-    }
-    
-    // Fall back to checking PATH
+    // Use the binary from PATH by default
     return 'andromeda';
 }
 
@@ -84,8 +52,10 @@ function startLanguageServer(context: vscode.ExtensionContext) {
 
     const executablePath = getExecutablePath();
     
-    // Check if executable exists before trying to start server
-    if (!fs.existsSync(executablePath)) {
+    // Only check if executable exists if it's an absolute path
+    // For command names (like 'andromeda'), let the system resolve via PATH
+    const isAbsolutePath = executablePath.includes('/') || executablePath.includes('\\') || executablePath.includes(':');
+    if (isAbsolutePath && !fs.existsSync(executablePath)) {
         vscode.window.showErrorMessage(
             `Andromeda executable not found at "${executablePath}". ` +
             `Please build the project with 'cargo build' or set 'andromeda.executablePath' in settings.`,
@@ -104,7 +74,7 @@ function startLanguageServer(context: vscode.ExtensionContext) {
         args: ['lsp'],
         options: {
             env: { ...process.env },
-            shell: false  // Don't use shell to avoid PATH issues
+            shell: !isAbsolutePath  // Use shell for PATH resolution when not absolute path
         } as ExecutableOptions
     };
 
