@@ -55,4 +55,3 @@ let camelcase_issue = "bad naming"; // Should suggest camelCase
 if (value == "test") { // Should suggest === instead of ==
   console.log("Equal");
 }
-
