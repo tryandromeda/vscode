@@ -1,9 +1,9 @@
 {
-  "name": "andromeda-vscode",
+  "name": "andromeda-runtime-vscode",
   "displayName": "Andromeda Language Server",
-  "description": "JavaScript and TypeScript linting with the Andromeda Language Server",
-  "version": "0.1.0",
-  "publisher": "andromeda-team",
+  "description": "Enhanced JavaScript and TypeScript support with the Andromeda Language Server - featuring advanced linting, auto-completion, formatting, and code actions",
+  "version": "0.1.2",
+  "publisher": "Andromeda",
   "license": "MPL-2.0",
   "homepage": "https://github.com/tryandromeda/andromeda",
   "repository": {
@@ -14,11 +14,17 @@
     "url": "https://github.com/tryandromeda/andromeda/issues"
   },
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.102.3"
+  },
+  "icon": "assets/andromeda.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
   },
   "categories": [
     "Programming Languages",
-    "Linters",
+    "Linters", 
+    "Formatters",
     "Other"
   ],
   "keywords": [
@@ -26,7 +32,15 @@
     "typescript",
     "linting",
     "language-server",
-    "andromeda"
+    "andromeda",
+    "auto-completion",
+    "code-actions",
+    "formatting",
+    "diagnostics",
+    "hover",
+    "web-apis",
+    "canvas",
+    "crypto"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -76,6 +90,26 @@
           "enum": ["off", "messages", "verbose"],
           "default": "off",
           "description": "Traces the communication between VS Code and the language server"
+        },
+        "andromeda.format.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable code formatting"
+        },
+        "andromeda.codeAction.autoFix.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable auto-fix code actions"
+        },
+        "andromeda.completion.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable enhanced completions for Andromeda APIs"
+        },
+        "andromeda.hover.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable hover information and documentation"
         }
       }
     },
@@ -89,24 +123,64 @@
         "command": "andromeda.showOutput",
         "title": "Show Andromeda Output",
         "category": "Andromeda"
+      },
+      {
+        "command": "andromeda.client.applyAutoFix",
+        "title": "Apply Auto Fix",
+        "category": "Andromeda"
+      },
+      {
+        "command": "andromeda.client.fixAll",
+        "title": "Fix All Auto-fixable Problems",
+        "category": "Andromeda"
+      },
+      {
+        "command": "andromeda.format",
+        "title": "Format Document",
+        "category": "Andromeda"
       }
     ],
     "menus": {
       "commandPalette": [
         {
-          "command": "andromeda.restart",
-          "when": "andromeda.enabled"
+          "command": "andromeda.restart"
         },
         {
-          "command": "andromeda.showOutput",
-          "when": "andromeda.enabled"
+          "command": "andromeda.showOutput"
+        },
+        {
+          "command": "andromeda.client.applyAutoFix",
+          "when": "editorLangId =~ /^(javascript|typescript)$/"
+        },
+        {
+          "command": "andromeda.client.fixAll",
+          "when": "editorLangId =~ /^(javascript|typescript)$/"
+        },
+        {
+          "command": "andromeda.format",
+          "when": "editorLangId =~ /^(javascript|typescript)$/"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "andromeda.client.applyAutoFix",
+          "when": "andromeda.enabled && editorLangId =~ /^(javascript|typescript)$/ && resourceExtname =~ /\\.(js|jsx|ts|tsx|mjs|cjs)$/",
+          "group": "1_modification@1"
+        },
+        {
+          "command": "andromeda.client.fixAll",
+          "when": "andromeda.enabled && editorLangId =~ /^(javascript|typescript)$/ && resourceExtname =~ /\\.(js|jsx|ts|tsx|mjs|cjs)$/",
+          "group": "1_modification@2"
         }
       ]
     }
   },
   "activationEvents": [
     "onLanguage:javascript",
-    "onLanguage:typescript"
+    "onLanguage:typescript",
+    "onCommand:andromeda.restart",
+    "onCommand:andromeda.showOutput",
+    "onStartupFinished"
   ],
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -119,7 +193,7 @@
   },
   "devDependencies": {
     "@types/vscode": "^1.102.0",
-    "@types/node": "^24.1.0",
+    "@types/node": "24.2.0",
     "typescript": "^5.9.2",
     "@vscode/vsce": "^3.0.0"
   },
