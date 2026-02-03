@@ -2,22 +2,22 @@
 
 A VS Code extension that integrates the Andromeda Language Server for comprehensive JavaScript and TypeScript development support.
 
-## ✨ Features
+## Features
 
-- **🔍 Real-time Diagnostics** - Live error reporting with comprehensive linting rules
-- **⚡ Enhanced Auto-completion** - Context-aware completions for:
+- **Real-time Diagnostics** - Live error reporting with comprehensive linting rules
+- **Auto-completion** - Context-aware completions for:
   - Andromeda APIs (file system, environment, process operations)
   - Web APIs (Canvas, Crypto, Performance, Storage, Timers)
   - Console methods with rich descriptions
   - Database operations (SQLite)
-- **🛠️ Code Actions & Quick Fixes** - Auto-fix capabilities for common issues
-- **📝 Document Formatting** - Built-in code formatting support
-- **💡 Hover Information** - Rich documentation and type information on hover
-- **⚙️ Configurable Diagnostics** - Run on type, save, or never
-- **📁 Multiple File Format Support** - `.js`, `.jsx`, `.ts`, `.tsx`, `.mjs`, `.cjs`
-- **🎯 Advanced Linting Rules** including:
+- **Code Actions & Quick Fixes** - Auto-fix capabilities for common issues
+- **Document Formatting** - Built-in code formatting support
+- **Hover Information** - Rich documentation and type information on hover
+- **Configurable Diagnostics** - Run on type, save, or never
+- **Multiple File Format Support** - `.js`, `.jsx`, `.ts`, `.tsx`, `.mjs`, `.cjs`
+- **Advanced Linting Rules** including:
   - Empty statement detection
-  - Variable usage validation  
+  - Variable usage validation
   - Unreachable code detection
   - Camelcase naming enforcement
   - Console usage warnings
@@ -25,12 +25,12 @@ A VS Code extension that integrates the Andromeda Language Server for comprehens
   - Type checking for TypeScript
   - And many more...
 
-## 🚀 Requirements
+## Requirements
 
 - [Andromeda](https://github.com/tryandromeda/andromeda) v0.1.0-draft14 or higher
 - VS Code 1.74.0 or higher
 
-## 📦 Installation
+## Installation
 
 ### From Source
 
@@ -42,18 +42,39 @@ A VS Code extension that integrates the Andromeda Language Server for comprehens
 ### Installing Andromeda
 
 Make sure you have Andromeda installed:
+Platform specific instructions:
 
-```bash
-# Install from source (requires Rust)
-git clone https://github.com/tryandromeda/andromeda
-cd andromeda
-cargo install --path cli
+Linux/Mac:
 
-# Or install from crates.io (when available)
-cargo install --git https://github.com/tryandromeda/andromeda
+```sh
+curl -fsSL https://tryandromeda.dev/install.sh | bash
 ```
 
-## ⚙️ Configuration
+Windows (PowerShell):
+
+```sh
+irm -Uri "https://tryandromeda.dev/install.ps1" | Invoke-Expression
+```
+
+Windows (CMD):
+
+```sh
+curl -L -o install.bat https://tryandromeda.dev/install.bat && install.bat
+```
+
+Install Andromeda using Cargo:
+
+```sh
+cargo install --git https://github.com/tryandromeda/andromeda andromeda
+```
+
+Install Andromeda using winget:
+
+```sh
+winget install --id Andromeda.Andromeda
+```
+
+## Configuration
 
 The extension can be configured through VS Code settings:
 
@@ -75,6 +96,7 @@ The extension can be configured through VS Code settings:
 ### Settings Reference
 
 #### Core Settings
+
 - `andromeda.enable`: Enable/disable the Andromeda language server
 - `andromeda.run`: When to run diagnostics (`onType`, `onSave`, `never`)
 - `andromeda.configPath`: Path to custom Andromeda configuration file
@@ -83,12 +105,13 @@ The extension can be configured through VS Code settings:
 - `andromeda.trace.server`: Enable LSP communication tracing for debugging
 
 #### Feature Settings
+
 - `andromeda.format.enable`: Enable code formatting (default: `true`)
 - `andromeda.codeAction.autoFix.enable`: Enable auto-fix code actions (default: `true`)
 - `andromeda.completion.enable`: Enable enhanced completions (default: `true`)
 - `andromeda.hover.enable`: Enable hover information (default: `true`)
 
-## 🎮 Commands
+## Commands
 
 Access these commands via the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`):
 
@@ -98,7 +121,7 @@ Access these commands via the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`):
 - **Andromeda: Fix All Auto-fixable Problems** - Fix all auto-fixable problems in the current file
 - **Andromeda: Format Document** - Format the current document
 
-## 🎯 Usage
+## Usage
 
 1. Install the extension and ensure Andromeda is in your PATH
 2. Open a JavaScript or TypeScript file
@@ -111,17 +134,17 @@ The extension provides rich completions for various APIs:
 
 ```javascript
 // Andromeda File System APIs
-Andromeda.readTextFileSync|  // 🗎 Reads a text file synchronously
-Andromeda.writeFileSync|     // 💾 Writes binary data to a file
+Andromeda.readTextFileSync|  // Reads a text file synchronously
+Andromeda.writeFileSync|     // Writes binary data to a file
 
 // Web APIs
-crypto.subtle.digest|        // 🔐 Computes a digest of the given data
-performance.now|             // ⏱️ High-precision timing
-localStorage.setItem|        // 💾 Stores data in local storage
+crypto.subtle.digest|        // Computes a digest of the given data
+performance.now|             // High-precision timing
+localStorage.setItem|        // Stores data in local storage
 
 // Canvas APIs (when working with canvas)
-ctx.fillRect|                // 🔳 Draws a filled rectangle
-ctx.beginPath|               // 🎯 Begins a new path
+ctx.fillRect|                // Draws a filled rectangle
+ctx.beginPath|               // Begins a new path
 ```
 
 ### Auto-Fix Examples
@@ -134,14 +157,14 @@ The extension can automatically fix common issues:
 - Remove empty statements
 - And more...
 
-## 📁 Supported File Types
+## Supported File Types
 
 - **JavaScript**: `.js`, `.mjs`, `.cjs`
 - **JSX**: `.jsx`
 - **TypeScript**: `.ts`
 - **TSX**: `.tsx`
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Language Server Not Starting
 
@@ -169,7 +192,7 @@ The extension can automatically fix common issues:
 2. **File saved**: Ensure the file is saved before formatting
 3. **Syntax errors**: Fix any syntax errors that might prevent formatting
 
-## 🚀 Development
+## Development
 
 ### Building
 
@@ -192,25 +215,15 @@ npm run lint      # Check for TypeScript issues
 npm run watch     # Watch for changes during development
 ```
 
-## 📋 What's New in v0.2.0
-
-- ✨ **Enhanced Completions**: Context-aware completions for Andromeda and Web APIs
-- 🛠️ **Code Actions**: Auto-fix capabilities with quick fixes for common issues  
-- 📝 **Formatting Support**: Built-in document and range formatting
-- 💡 **Hover Information**: Rich documentation on hover (when available)
-- ⚙️ **Improved Configuration**: More granular control over features
-- 🎯 **Better Diagnostics**: Enhanced linting rules with clearer error messages
-- 🖱️ **Context Menu Integration**: Right-click to access auto-fix options
-
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see the [main Andromeda repository](https://github.com/tryandromeda/andromeda) for contribution guidelines.
 
-## 📜 License
+## License
 
 Mozilla Public License Version 2.0 - see [LICENSE.md](LICENSE.md) for details.
 
-## 🔗 Links
+## Links
 
 - [Andromeda Runtime](https://github.com/tryandromeda/andromeda)
 - [Issues & Bug Reports](https://github.com/tryandromeda/andromeda/issues)

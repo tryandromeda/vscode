@@ -1,7 +1,0 @@
-id = "andromeda"
-name = "Andromeda"
-version = "0.1.0"
-schema_version = 1
-authors = ["Andromeda Team <team@andromeda.dev>"]
-description = "Enhanced JavaScript and TypeScript support with the Andromeda Language Server - featuring advanced linting, auto-completion, formatting, and code actions"
-repository = "https://github.com/tryandromeda/zed-andromeda"
